@@ -21,7 +21,7 @@ def repeat_all_message(message):
         
         # Split message into 2 parts - category & price
         category, price = message.text.split(':', -1)
-        text_message = f'Coin addedd: {category} on price {price}kzt'
+        text_message = f'Coin added: {category} on price {price} kzt'
         bot.send_message(message.chat.id, text_message)
         
         # Open spread and add expense
