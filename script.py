@@ -1,10 +1,10 @@
-from datetime import date, datetime
+from datetime import date
 import gspread
 import telebot
 
 
-bot_token = '5533002918:AAHC43jI7TzDatGQci0OIyWy02yndbUEr14'
-googlesheet_url = 'https://docs.google.com/spreadsheets/d/1GLgzl0hJyG3igKJVBDR1uBtxdvl9rz9f6yKbSUDIBKM'
+bot_token = 'BOT_TOKEN'
+googlesheet_url = 'GOOGLESHEET_URL'
 bot = telebot.TeleBot(bot_token)
 gc = gspread.service_account()
 
@@ -24,20 +24,16 @@ def repeat_all_message(message):
             if len(message.split(':')) == 3:
                 category, price, day = message.split(':')
                 if day in ['today', 'tod']:
-                    day_str = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}'
+                    day = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}'
                 elif day in ['tomorrow', 'tom']:
-                    day_str = f'{dt_tod.day-1}.{dt_tod.month}.{dt_tod.year}'
+                    day = f'{dt_tod.day-1}.{dt_tod.month}.{dt_tod.year}'
                 else:
-                    day_str = f'{day}.{dt_tod.month}.{dt_tod.year}'
-                day_dt = datetime.strptime(day_str, '%d.%m.%Y')
-                day = str(day_dt)[:11]
+                    day = f'{day}.{dt_tod.month}.{dt_tod.year}'
                 return category, price, day
             else:
                 category, price = message.split(':')
-                day_str = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}' 
-                day_dt = datetime.strptime(day_str, '%d.%m.%Y')
-                day = str(day_dt)[:11]
-                return category, price, day
+                day = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}'
+            return category, price, day
         category, price, day = splitmsg(message.text)
         
         # Open spread and add expense
