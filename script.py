@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 import gspread
 import telebot
 
@@ -24,16 +24,20 @@ def repeat_all_message(message):
             if len(message.split(':')) == 3:
                 category, price, day = message.split(':')
                 if day in ['today', 'tod']:
-                    day = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}'
+                    day_str = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}'
                 elif day in ['tomorrow', 'tom']:
-                    day = f'{dt_tod.day-1}.{dt_tod.month}.{dt_tod.year}'
+                    day_str = f'{dt_tod.day-1}.{dt_tod.month}.{dt_tod.year}'
                 else:
-                    day = f'{day}.{dt_tod.month}.{dt_tod.year}'
+                    day_str = f'{day}.{dt_tod.month}.{dt_tod.year}'
+                day_dt = datetime.strptime(day_str, '%d.%m.%Y')
+                day = str(day_dt)[:11]
                 return category, price, day
             else:
                 category, price = message.split(':')
-                day = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}'
-            return category, price, day
+                day_str = f'{dt_tod.day}.{dt_tod.month}.{dt_tod.year}' 
+                day_dt = datetime.strptime(day_str, '%d.%m.%Y')
+                day = str(day_dt)[:11]
+                return category, price, day
         category, price, day = splitmsg(message.text)
         
         # Open spread and add expense
