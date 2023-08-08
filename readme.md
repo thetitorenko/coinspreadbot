@@ -1,4 +1,3 @@
-# simpe_telegram_expenses_bot
 Another Telegram bot adding coins to Google`s Spreadsheet
 
 ## Release notes:
